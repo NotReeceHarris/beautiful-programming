@@ -1,0 +1,17 @@
+{
+    "1": {
+        "id": 1,
+        "title": "Hello World",
+        "content": "This is my first post!"
+    },
+    "2": {
+        "id": 2,
+        "title": "Bonjour Monde",
+        "content": "Ceci est mon premier post!"
+    },
+    "3": {
+        "id": 3,
+        "title": "Hola Mundo",
+        "content": "Este es mi primer post!"
+    }
+}
