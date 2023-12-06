@@ -7,11 +7,8 @@
 */
 
 var express = require('express');
-const cookieParser = require("cookie-parser");
 var app = express();
 const posts = require('../data/posts.json');
-
-app.use(cookieParser());
 
 function slugify(string) {
     const a = 'àáâäæãåāăąçćčđďèéêëēėęěğǵḧîïíīįìıİłḿñńǹňôöòóœøōõőṕŕřßśšşșťțûüùúūǘůűųẃẍÿýžźż·/_,:;'
@@ -29,7 +26,6 @@ function slugify(string) {
 }
 
 app.get('/', function (req, res) {
-    console.log(req.cookies)
     return res.send('<ul><li><a href="/p/1/hello-world">Hello World</a></li><li><a href="/p/2/bonjour-monde">Bonjour Monde</a></li><li><a href="/p/3/hola-mundo">Hola Mundo</a></li></ul>');
 });
 
