@@ -1,6 +1,6 @@
 const fs = require('fs');
 
-const input = fs.readFileSync('./AdventOfCode/Day1.txt', 'utf8');
+const input = fs.readFileSync('./AoC/Day1.txt', 'utf8');
 const inputArray = input.split('\n');
 
 let  overall = 0;

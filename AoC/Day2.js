@@ -3,7 +3,7 @@
 
 const fs = require('fs');
 
-const input = fs.readFileSync('./AdventOfCode/Day2.txt', 'utf8');
+const input = fs.readFileSync('./AoC/Day2.txt', 'utf8');
 const inputArray = input.split('\n');
 inputArray.pop();
 

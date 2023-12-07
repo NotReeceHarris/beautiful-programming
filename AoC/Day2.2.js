@@ -3,15 +3,10 @@
 
 const fs = require('fs');
 
-const input = fs.readFileSync('./AdventOfCode/Day2.txt', 'utf8');
+const input = fs.readFileSync('./AoC/Day2.txt', 'utf8');
 const inputArray = input.split('\n');
 inputArray.pop();
 
-const colors = {
-    red: 12,
-    green: 13,
-    blue: 14
-}
 
 let games = [];
 
@@ -41,7 +36,6 @@ for (let i = 0; i < inputArray.length; i++) {
     line[0] = line[0].split(': ')[1];
 
     const subgames = [];
-    let isPossible = true;
 
     for (let s = 0; s < line.length; s++) {
         const subGame = line[s];
@@ -50,24 +44,24 @@ for (let i = 0; i < inputArray.length; i++) {
             green: getCubes(subGame, 'green'),
             blue: getCubes(subGame, 'blue')
         })
-
-        if (subgames[s].red > colors.red || subgames[s].green > colors.green || subgames[s].blue > colors.blue) {
-            isPossible = false;
-        }
-
     }
 
     games.push({
         id: id,
         subgames,
-        isPossible
+        minimum: {
+            red: Math.max(...subgames.map(subgame => subgame.red)),
+            green: Math.max(...subgames.map(subgame => subgame.green)),
+            blue: Math.max(...subgames.map(subgame => subgame.blue))
+        },
+        powerOfMins: Math.max(...subgames.map(subgame => subgame.red)) * Math.max(...subgames.map(subgame => subgame.green)) * Math.max(...subgames.map(subgame => subgame.blue))
     })
 
 }
 
-const possibleGames = games.filter(game => game.isPossible);
-const sumOfPossibleGames = possibleGames.reduce((result, current) => {
-    return result + parseInt(current.id);
+const sumOfPowers = games.reduce((result, current) => {
+    return result + parseInt(current.powerOfMins);
 }, 0);
 
-console.log(sumOfPossibleGames)
+console.log(games)
+console.log(sumOfPowers)

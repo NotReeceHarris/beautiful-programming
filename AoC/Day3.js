@@ -1,9 +1,9 @@
 const fs = require('fs');
 
-const input = fs.readFileSync('./AdventOfCode/Day3.txt', 'utf8');
+const input = fs.readFileSync('./AoC/Day3.txt', 'utf8');
 const inputArray = input.split('\n');
 
-const partNumbers = [];
+const partNumbers = {};
 
 for (let i = 0; i < inputArray.length; i++) {
     const line = inputArray[i];
@@ -21,8 +21,14 @@ for (let i = 0; i < inputArray.length; i++) {
 
             const filteredX = [right, left].join('').replace(/\./g, '')
             if (filteredX.length!==0) {
-                console.log(i+1, element, [right, left])
-                partNumbers.push(element)
+                if (`${i}-${element}` in partNumbers) {
+                    partNumbers[`${i}-${element}`].connections.push(right, left)
+                } else {
+                    partNumbers[`${i}-${element}`] = {
+                        partNumber: element,
+                        connections: [right, left]
+                    }
+                }
             }
         }
     }
@@ -30,8 +36,6 @@ for (let i = 0; i < inputArray.length; i++) {
     // Test for y and diagonally adjacent numbers
     for (let y = 0; y < lineArray.length; y++) {
         const element = lineArray[y];
-        var numberPattern = /^\d+$/;
-
         if (/\d/.test(element)) {
             const lin = line.search(new RegExp(`\\b${element}\\b`));
             const aboveElement = i != 0 ? inputArray[i-1]: '';
@@ -52,8 +56,19 @@ for (let i = 0; i < inputArray.length; i++) {
 
             const filteredY = [...below, ...above].join('').replace(/\./g, '')
             if (filteredY.length!==0) {
-                console.log(i+1, element, [...above, ...below])
-                partNumbers.push(element)
+
+                const data = [].filter(function( element ) {
+                    return element !== undefined;
+                 });
+
+                if (`${i}-${element}` in partNumbers) {
+                    partNumbers[`${i}-${element}`].connections.push(...above, ...below)
+                } else {
+                    partNumbers[`${i}-${element}`] = {
+                        partNumber: element,
+                        connections: [...above, ...below]
+                    }
+                }
             }
 
         }
@@ -62,4 +77,5 @@ for (let i = 0; i < inputArray.length; i++) {
 
 }
 
-console.log(partNumbers.reduce((partialSum, a) => parseInt(partialSum) + parseInt(a), 0))
+console.log(partNumbers)
+console.log(Object.values(partNumbers).reduce((partialSum, a) => partialSum + parseInt(a.partNumber), 0))
